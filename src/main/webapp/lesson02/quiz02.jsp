@@ -24,6 +24,7 @@
 		<a href="/Test/lesson02/quiz02_1.jsp?type=time" class="btn btn-info">현재 시간 확인</a>
 		<a href="/Test/lesson02/quiz02_1.jsp?type=date" class="btn btn-success">현재 날짜 확인</a>
 	</div>
+	<div>ddd</div>
 	
 </body>
 </html>
