@@ -13,6 +13,8 @@
 </head>
 <body>
 	<%
+	// for korean letters
+	request.setCharacterEncoding("UTF-8");
 	List<Map<String, Object>> list = new ArrayList<>();
     Map<String, Object> map = new HashMap<String, Object>() {{ put("name", "버거킹"); put("menu", "햄버거"); put("point", 4.3); } };
     list.add(map);
@@ -30,34 +32,64 @@
     list.add(map);
 	
 	String query = request.getParameter("menu");
+	
+	// check whether the user wants to hide menus with points equal or under 4
+	String[] temp = request.getParameterValues("limit");
+	boolean exists_limit = true;
+	if (temp == null || temp.length == 0) {
+		exists_limit = false;
+	}
 	%>
 	
 	<div class="container">
-		<table class="table">
+		<p class="display-4 text-center">검색 결과</p>
+		<table class="table table-hover mt-2">
 			<thead>
 				<tr>
-					<th>메뉴</th>
-					<th>상호</th>
-					<th>별점</th>
+					<th class="text-center">메뉴</th>
+					<th class="text-center">상호</th>
+					<th class="text-center">별점</th>
 				</tr>
 			</thead>
 			<%
+			boolean no_result = true;
 			for (Map<String, Object> row: list) {
-				if(row.get("menu").equals(query)) {
-					if (((Double) row.get("point")) >= 4.0) {
-						%>
-						<tr>
-							<td><%= row.get("menu") %></td>
-							<td><%= row.get("name") %></td>
-							<td><%= ((Double) row.get("point")) %></td>
-						</tr>
-						<%
+				boolean show = false;
+				if (row.get("menu").equals(query)) {
+					if (exists_limit) {
+						if (((Double) row.get("point")) >= 4.0) {
+							show = true;
+						}
 					}
+					else {
+						show = true;
+					}
+				}
+				
+				if (show) {
+					no_result = false;
+					%>
+					<tr>
+						<td class="text-center"><%= row.get("menu") %></td>
+						<td class="text-center"><%= row.get("name") %></td>
+						<td class="text-center"><%= ((Double) row.get("point")) %></td>
+					</tr>
+					<%
 				}
 			}
 			%>
 			</table>
-
+		<%
+		if (no_result) {
+			%>
+			<div class="text-center col-6 mx-auto">
+			<img class="img-fluid" src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/media/1273880a5b9cc8008301089835f37939.gif">
+			</div>
+			<%
+		}
+		%>
+			
+		
 	</div>
 	
 	
