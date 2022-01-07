@@ -17,6 +17,17 @@
 	Calendar yesterday = Calendar.getInstance();
 	yesterday.add(Calendar.DATE, -1);
 	out.print("어제 날짜" + sdf2.format(yesterday.getTime()));
+	
+	int result = today.compareTo(yesterday);
+	if (result > 0) {
+		out.print("today가 더 크다");
+	}
+	else if (result == 0) {
+		out.print("두 날짜는 같다. ");
+	}
+	else {
+		out.print("yesterday가 더 크다");
+	}
 	%>
 </body>
 </html>
