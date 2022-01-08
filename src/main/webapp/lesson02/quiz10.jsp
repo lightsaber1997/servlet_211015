@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="container">
-		<table>
+		<table class="table text-center" >
 			<thead>
 				<tr>
 					<th>일</th>
@@ -34,12 +34,26 @@
 				int current_month = current.getMonthValue();
 				LocalDate start = LocalDate.of(current.getYear(), current.getMonthValue(), 1);
 				// whether to start a new row
-				boolean start_new_row = true;
 				while (start.getMonthValue() == current.getMonthValue()) {
+					%>
+					<tr>
 					
-					
-
-					start = start.plusDays(1);
+					<% 
+					if (start.getDayOfMonth() == 1) {
+						
+					}
+					while(true) {
+						%>
+						<td><%= start.getDayOfMonth() %></td>
+						<%
+						start = start.plusDays(1);
+						if (start.getMonthValue() != current.getMonthValue() || start.getDayOfWeek() == DayOfWeek.SUNDAY) {
+							break;
+						}
+					}
+					%>
+					</tr>
+						<%
 				}
 				%>
 				</tbody>
